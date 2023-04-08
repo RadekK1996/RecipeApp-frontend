@@ -1,0 +1,39 @@
+.landing-page-container {
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 80px;
+
+}
+
+.description-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    font-size: 20px;
+    background-image: url("https://images.unsplash.com/photo-1541377391972-03ee2fe4c4a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+    background-size: cover;
+    height: 100vh;
+
+
+}
+
+.description-container h1 {
+    text-align: center;
+    font-size: 50px;
+
+
+}
+
+
+.description-container p {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 150px;
+
+}
+

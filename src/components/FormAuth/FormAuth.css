@@ -1,0 +1,52 @@
+.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    width: 400px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.pass-info {
+    margin: 20px 20px;
+}
+
+
+
+.pass-info ul {
+    list-style: inherit;
+
+}
+
+.pass-info li {
+    border: none;
+    padding: 0;
+    margin-bottom: 5px;
+    font-size: 12px;
+
+}
+.password-icon {
+    display: inline-block;
+    font-size: 45px;
+    margin-left: 5px;
+    cursor: pointer;
+    vertical-align: middle;
+}
