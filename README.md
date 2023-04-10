@@ -3,7 +3,7 @@
 
 ## Link do backendu : https://github.com/RadekK1996/RecipeApp-backend
 
-![LandingPage](https://i.imgur.com/FCrptqs.png)
+![RecipeApp](https://i.imgur.com/FCrptqs.png)(https://ladekesl.imgur.com/all/)
 
 ## Uruchomienie : 
 - Sklonuj repozytorium na swój komputer.
