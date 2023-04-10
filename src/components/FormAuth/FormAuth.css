@@ -29,8 +29,6 @@
     margin: 20px 20px;
 }
 
-
-
 .pass-info ul {
     list-style: inherit;
 
@@ -49,4 +47,9 @@
     margin-left: 5px;
     cursor: pointer;
     vertical-align: middle;
+}
+
+.register-link {
+  margin-left: 25px;
+    font-size: 15px;
 }

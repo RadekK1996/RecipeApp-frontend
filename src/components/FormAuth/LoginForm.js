@@ -3,6 +3,7 @@ import {useCookies} from "react-cookie";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import axios from "axios";
 import {Form} from "./FormAuth.js";
+import './FormAuth.css';
 
 
 export const LoginForm = () => {
@@ -45,7 +46,7 @@ export const LoginForm = () => {
                 label="Login"
                 onSubmit={onSubmit}
             />
-            <p>You don't have an account yet? <Link to="/register">Register</Link></p>
+            <p className='register-link'>You don't have an account yet? <Link to="/register">Register</Link></p>
         </div>
     );
 

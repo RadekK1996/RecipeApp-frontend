@@ -2,6 +2,7 @@ import {useState} from "react";
 import axios from "axios";
 import {Form} from "./FormAuth.js";
 import {Link, useNavigate} from "react-router-dom";
+import './FormAuth.css';
 
 export const RegisterForm = () => {
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ export const RegisterForm = () => {
                 label="Register"
                 onSubmit={onSubmit}
             />
-            <p>Already have an account? <Link to="/login">Log in</Link></p>
+            <p className='register-link'>Already have an account? <Link to="/login">Log in</Link></p>
             <div className="pass-info">
                 <ul>
                     <h2>Password must contain:</h2>

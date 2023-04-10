@@ -8,7 +8,7 @@ export const LandingPage = () => (
             <h1>Welcome to the recipe app!</h1>
             <p>
                 This app allows you to create and save your favorite recipes. To get started, you need to log in or
-                create a new account
+                create a new account.
             </p>
 
         </div>
