@@ -77,40 +77,6 @@ button {
   transition: background-color 0.3s ease-in-out;
 }
 
-.deleted-button {
-  background-color: red;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-right: 10px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.deleted-button:hover{
-  background-color: #D30F02;
-}
-
-.created-button {
-  background-color: green;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.go-back-button {
-  background-color: #ff7f50;
-}
-
 button:hover {
   background-color: #ff7f50;
 }
@@ -118,33 +84,6 @@ button:hover {
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-}
-
-.logout-button {
-  background-color: #FF4136;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.logout-button:hover {
-  background-color: #D30F02;
-}
-
-
-.deleted-message {
-  position: absolute;
-  top: 80px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  background-color: green;
-  color: white;
-  padding: 10px;
 }
 
 .error {

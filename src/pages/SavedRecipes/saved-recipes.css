@@ -5,3 +5,34 @@
 .saved-recipes-title {
     margin-top: 100px;
 }
+
+.deleted-button {
+    background-color: red;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.deleted-button:hover{
+    background-color: #D30F02;
+}
+
+.go-back-button {
+    background-color: #ff7f50;
+}
+
+.deleted-message {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: green;
+    color: white;
+    padding: 10px;
+}
