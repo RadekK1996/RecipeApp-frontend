@@ -1,7 +1,7 @@
 # Projekt zaliczeniowy MegaK - RecipeApp. 
 
 
-## Link do frontendu : https://github.com/RadekK1996/RecipeApp-backend
+## Link do backendu : https://github.com/RadekK1996/RecipeApp-backend
 
 ## Uruchomienie : 
 - Sklonuj repozytorium na swój komputer.
