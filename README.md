@@ -14,7 +14,8 @@
 - react-dom,
 - react-router-dom,
 - react-icons,
--axios
+- axios
+
 
 
 
