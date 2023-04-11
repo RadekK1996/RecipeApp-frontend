@@ -3,8 +3,7 @@
 
 ## Link do backendu : https://github.com/RadekK1996/RecipeApp-backend
 
-![RecipeApp](https://i.imgur.com/FCrptqs.png)(https://ladekesl.imgur.com/all/)
-
+![RecipeApp](https://i.imgur.com/FCrptqs.png)(https://imgur.com/a/2ShkNpV)
 ## Uruchomienie : 
 - Sklonuj repozytorium na swój komputer.
 - Zainstaluj zależności: npm install.
