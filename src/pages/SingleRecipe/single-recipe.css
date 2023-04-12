@@ -8,8 +8,6 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     max-width: 800px;
     margin: 0 auto;
-
-
 }
 
 .recipe-name {
@@ -28,7 +26,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
 .recipe-details p {
@@ -49,7 +46,6 @@
 
 .recipe-instructions ol {
     margin: 10px 0;
-
 }
 
 .recipe-instructions li {

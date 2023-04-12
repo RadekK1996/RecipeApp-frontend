@@ -2,6 +2,7 @@
     margin-top: 80px;
 
 }
+
 .saved-recipes-title {
     margin-top: 100px;
 }
@@ -18,7 +19,7 @@
     transition: background-color 0.3s ease-in-out;
 }
 
-.deleted-button:hover{
+.deleted-button:hover {
     background-color: #D30F02;
 }
 

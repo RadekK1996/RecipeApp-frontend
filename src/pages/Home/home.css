@@ -4,8 +4,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
-
 }
 
 .welcome {
@@ -25,15 +23,12 @@
     text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
     width: 100%;
     height: 300px;
-
 }
 
 .welcome h2 {
     font-size: 48px;
     margin-bottom: 20px;
     text-align: center;
-
-
 }
 
 .welcome p {
@@ -43,7 +38,6 @@
     text-align: center;
     color: white;
     font-weight: bold;
-
 }
 
 .recipe-list ul {
@@ -54,7 +48,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
 }
 
 .recipe-list li {
@@ -66,7 +59,7 @@
     width: calc(50% - 20px);
     margin: 10px;
     max-width: 300px;
-    background-color:  #40E0D0;
+    background-color: #40E0D0;
     align-self: flex-start;
     text-align: center;
 }
@@ -74,7 +67,6 @@
 
 .recipe-list li img {
     max-width: 100%;
-    max-height: 150px ;
-
+    max-height: 150px;
 }
 

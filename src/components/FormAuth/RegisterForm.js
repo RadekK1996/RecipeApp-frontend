@@ -48,5 +48,4 @@ export const RegisterForm = () => {
             </div>
         </div>
     );
-
 };

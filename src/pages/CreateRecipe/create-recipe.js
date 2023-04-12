@@ -17,11 +17,11 @@ export const CreateRecipe = () => {
         createdAt: new Date(),
         userOwner: userID,
     });
+
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const [errors, setErrors] = useState([]);
     const [cookies, _] = useCookies(["access_token"]);
     const navigate = useNavigate();
-
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -61,14 +61,14 @@ export const CreateRecipe = () => {
         const errors = [];
 
         const requiredFields = [
-            { field: 'name', message: 'Name is required' },
-            { field: 'instructions', message: 'Instructions are required' },
-            { field: 'imgUrl', message: 'Image URL is required' },
-            { field: 'cookingTime', message: 'Cooking time is required' },
+            {field: 'name', message: 'Name is required'},
+            {field: 'instructions', message: 'Instructions are required'},
+            {field: 'imgUrl', message: 'Image URL is required'},
+            {field: 'cookingTime', message: 'Cooking time is required'},
             {field: 'category', message: 'Category is required'}
         ];
 
-        requiredFields.forEach(({ field, message }) => {
+        requiredFields.forEach(({field, message}) => {
             if (!recipe[field]) {
                 errors.push(message);
             }
@@ -83,7 +83,7 @@ export const CreateRecipe = () => {
 
             try {
                 await axios.post("http://localhost:3001/api/recipes", recipe, {
-                    headers: { authorization: cookies.access_token },
+                    headers: {authorization: cookies.access_token},
                 });
                 setIsFormSubmitted(true);
                 setErrors([]);

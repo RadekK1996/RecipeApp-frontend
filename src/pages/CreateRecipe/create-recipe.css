@@ -10,6 +10,7 @@
     margin: 20px;
     width: 400px;
 }
+
 .create-recipe form {
     display: flex;
     flex-direction: column;
@@ -27,7 +28,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     font-weight: bold;
 }
-
 
 .recipe-info p::after {
     content: "";

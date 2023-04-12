@@ -5,7 +5,6 @@ import axios from "axios";
 import {Form} from "./FormAuth.js";
 import './FormAuth.css';
 
-
 export const LoginForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -15,7 +14,7 @@ export const LoginForm = () => {
     const [searchParams] = useSearchParams();
     let isAfterRegistration = searchParams.get('registered');
 
-    const onSubmit = async(e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:3001/api/auth/login", {
@@ -31,12 +30,11 @@ export const LoginForm = () => {
         } catch (err) {
             setError(err.response.data.message);
         }
-
-    }
+    };
 
     return (
         <div>
-            { error ? <div className="error">{error}</div> : <></>}
+            {error ? <div className="error">{error}</div> : <></>}
             <p className="success">{isAfterRegistration ? 'Your account was created. Now you can login' : ''}</p>
             <Form
                 username={username}
@@ -49,5 +47,4 @@ export const LoginForm = () => {
             <p className='register-link'>You don't have an account yet? <Link to="/register">Register</Link></p>
         </div>
     );
-
 };

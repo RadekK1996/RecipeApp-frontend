@@ -5,7 +5,6 @@ import {useCookies} from "react-cookie";
 import './saved-recipes.css';
 
 export const SavedRecipes = () => {
-
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [cookies, _] = useCookies(["access_token"]);
     const userID = useGetUserID();
@@ -41,7 +40,7 @@ export const SavedRecipes = () => {
 
     const handleGoBack = () => {
         setIsRecipeDeleted(false);
-    }
+    };
 
     return (
         <div className='page-container'>

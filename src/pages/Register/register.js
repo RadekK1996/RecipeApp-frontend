@@ -6,5 +6,4 @@ export const Register = () => {
             <RegisterForm/>
         </div>
     );
-
 };

@@ -22,13 +22,13 @@ export const Form = ({username, setUsername, password, setPassword, label, onSub
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password: </label>
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            value={password}
-                            id="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <div className="password-icon" onClick={handleShowPassword}>
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        id="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <div className="password-icon" onClick={handleShowPassword}>
                         {showPassword ? <BiHide/> : <BiShow/>}
                     </div>
 
@@ -38,5 +38,4 @@ export const Form = ({username, setUsername, password, setPassword, label, onSub
             </form>
         </div>
     )
-
-}
+};

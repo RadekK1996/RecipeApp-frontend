@@ -8,7 +8,6 @@ import './home.css';
 
 
 export const Home = () => {
-
     const [recipes, setRecipes] = useState([]);
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [cookies, _] = useCookies(["access_token"]);
@@ -83,36 +82,36 @@ export const Home = () => {
             </div>
             <h1>Recipes</h1>
             <div className="recipe-list">
-            <ul>
-                {recipes.map((recipe) => (
-                    <li key={recipe._id}>
-                        <div>
-                            <h2>{recipe.name}</h2>
-                            {cookies.access_token ? (
-                                <button
-                                    onClick={() => saveRecipe(recipe._id)}
-                                    disabled={isRecipeSaved(recipe._id)}
-                                >
-                                    {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-                                </button>
-                            ) : (
-                                <></>
-                            )}
-                            <Link to={`/recipe/${recipe._id}`}>
-                                <button>Show details</button>
-                            </Link>
-                        </div>
+                <ul>
+                    {recipes.map((recipe) => (
+                        <li key={recipe._id}>
+                            <div>
+                                <h2>{recipe.name}</h2>
+                                {cookies.access_token ? (
+                                    <button
+                                        onClick={() => saveRecipe(recipe._id)}
+                                        disabled={isRecipeSaved(recipe._id)}
+                                    >
+                                        {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
+                                    </button>
+                                ) : (
+                                    <></>
+                                )}
+                                <Link to={`/recipe/${recipe._id}`}>
+                                    <button>Show details</button>
+                                </Link>
+                            </div>
 
 
-                        <img src={recipe.imgUrl} alt={recipe.name}/>
-                        <div className="recipe-info">
-                            <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
-                            <p>Category: {recipe.category}</p>
-                            <p>CreatedAt: {moment(recipe.createdAt).format("LL")}</p>
-                        </div>
-                    </li>
-                ))}
-            </ul>
+                            <img src={recipe.imgUrl} alt={recipe.name}/>
+                            <div className="recipe-info">
+                                <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
+                                <p>Category: {recipe.category}</p>
+                                <p>CreatedAt: {moment(recipe.createdAt).format("LL")}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
 
         </div>
