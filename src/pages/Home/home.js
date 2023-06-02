@@ -2,9 +2,12 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useCookies} from "react-cookie";
+import {AiOutlineSearch} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import moment from "moment";
+import {debounce} from "lodash";
 import './home.css';
+
 
 
 export const Home = () => {
@@ -12,6 +15,7 @@ export const Home = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [cookies, _] = useCookies(["access_token"]);
     const [userName, setUserName] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const userID = useGetUserID();
 
 
@@ -56,6 +60,25 @@ export const Home = () => {
 
     }, []);
 
+    const debouncedSearch = debounce(async (searchTerm) => {
+        if (searchTerm) {
+            try {
+                const response = await axios.get(`http://localhost:3001/api/recipes/search?name=${searchTerm}`);
+                setRecipes(response.data);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+
+            const response = await axios.get('http://localhost:3001/api/recipes');
+            setRecipes(response.data);
+        }
+    }, 300); // Debounce time is 300ms
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        debouncedSearch(e.target.value);
+    };
 
     const saveRecipe = async (recipeID) => {
         try {
@@ -80,6 +103,16 @@ export const Home = () => {
                 <h2>Welcome, {userName}!</h2>
                 <p>Here you can browse and save recipes or create your own recipes to share with others!</p>
             </div>
+           <div className="search-container">
+               <input
+                   type="text"
+                   value={searchTerm}
+                   onChange={handleSearchChange}
+                   placeholder='Search recipes...'
+               />
+               <AiOutlineSearch style={{ marginLeft: '10px', color: '#606060', fontSize: '35px' }}/>
+           </div>
+
             <h1>Recipes</h1>
             <div className="recipe-list">
                 <ul>
