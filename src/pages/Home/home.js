@@ -8,8 +8,6 @@ import moment from "moment";
 import {debounce} from "lodash";
 import './home.css';
 
-
-
 export const Home = () => {
     const [recipes, setRecipes] = useState([]);
     const [savedRecipes, setSavedRecipes] = useState([]);
@@ -17,7 +15,6 @@ export const Home = () => {
     const [userName, setUserName] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const userID = useGetUserID();
-
 
     useEffect(() => {
         const fetchUserName = async () => {
@@ -73,7 +70,7 @@ export const Home = () => {
             const response = await axios.get('http://localhost:3001/api/recipes');
             setRecipes(response.data);
         }
-    }, 300); // Debounce time is 300ms
+    }, 300);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -96,22 +93,21 @@ export const Home = () => {
 
     const isRecipeSaved = (id) => savedRecipes.includes(id);
 
-
     return (
         <div className='page-container'>
             <div className='welcome'>
                 <h2>Welcome, {userName}!</h2>
                 <p>Here you can browse and save recipes or create your own recipes to share with others!</p>
             </div>
-           <div className="search-container">
-               <input
-                   type="text"
-                   value={searchTerm}
-                   onChange={handleSearchChange}
-                   placeholder='Search recipes...'
-               />
-               <AiOutlineSearch style={{ marginLeft: '10px', color: '#606060', fontSize: '35px' }}/>
-           </div>
+            <div className="search-container">
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    placeholder='Search recipes...'
+                />
+                <AiOutlineSearch style={{marginLeft: '10px', color: '#606060', fontSize: '35px'}}/>
+            </div>
 
             <h1>Recipes</h1>
             <div className="recipe-list">
@@ -134,8 +130,6 @@ export const Home = () => {
                                     <button>Show details</button>
                                 </Link>
                             </div>
-
-
                             <img src={recipe.imgUrl} alt={recipe.name}/>
                             <div className="recipe-info">
                                 <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
@@ -146,7 +140,6 @@ export const Home = () => {
                     ))}
                 </ul>
             </div>
-
         </div>
-    )
+    );
 };
