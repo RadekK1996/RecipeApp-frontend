@@ -51,3 +51,38 @@
 .logout-button:hover {
     background-color: #D30F02;
 }
+
+.logout-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px;
+    width: 50%;
+    max-width: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.logout-modal h2 {
+    margin-bottom: 20px;
+}
+
+.logout-modal button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    border: none;
+    background: #007BFF;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    display: inline-block;
+
+}
+
+.logout-modal button:last-child {
+    background: #6C757D;
+}
+
