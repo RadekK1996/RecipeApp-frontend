@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useCookies} from "react-cookie";
+import Modal from 'react-modal';
 import './saved-recipes.css';
 
 export const SavedRecipes = () => {
@@ -9,6 +10,8 @@ export const SavedRecipes = () => {
     const [cookies, _] = useCookies(["access_token"]);
     const userID = useGetUserID();
     const [isRecipeDeleted, setIsRecipeDeleted] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [recipeToDelete, setRecipeToDelete] = useState(null);
 
     useEffect(() => {
         const fetchSavedRecipe = async () => {
@@ -40,6 +43,20 @@ export const SavedRecipes = () => {
 
     const handleGoBack = () => {
         setIsRecipeDeleted(false);
+    };
+
+    const openModal = (recipeID) => {
+        setRecipeToDelete(recipeID);
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const deleteRecipe = () => {
+        handleDeleteRecipe(recipeToDelete);
+        closeModal();
     };
 
     return (
@@ -76,9 +93,18 @@ export const SavedRecipes = () => {
 
                                         <p>Category: {recipe.category}</p>
                                         <button className="deleted-button"
-                                                onClick={() => handleDeleteRecipe(recipe._id)}>
+                                                onClick={() => openModal(recipe._id)}>
                                             Delete
                                         </button>
+                                        <Modal
+                                            className="delete-modal"
+                                            isOpen={modalIsOpen}
+                                            onRequestClose={closeModal}
+                                            contentLabel="Delete Modal">
+                                            <h2>Are you sure you want to delete this recipe?</h2>
+                                            <button onClick={deleteRecipe}>Yes</button>
+                                            <button onClick={closeModal}>No</button>
+                                        </Modal>
                                     </div>
                                 </li>
                             ))}
