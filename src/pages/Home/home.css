@@ -93,3 +93,15 @@
     outline: none;
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
 }
+
+.deleteByAdmin-button {
+    background-color: #FF4136;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+    z-index: 1;
+}

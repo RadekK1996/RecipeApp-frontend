@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import moment from "moment";
 import {debounce} from "lodash";
 import './home.css';
+import Modal from "react-modal";
 
 export const Home = () => {
     const [recipes, setRecipes] = useState([]);
@@ -14,6 +15,9 @@ export const Home = () => {
     const [cookies, _] = useCookies(["access_token"]);
     const [userName, setUserName] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [recipeToDelete, setRecipeToDelete] = useState(null);
     const userID = useGetUserID();
 
     useEffect(() => {
@@ -26,8 +30,20 @@ export const Home = () => {
             }
         };
 
+        const fetchAdminStatus = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/api/recipes/adminStatus/${userID}`, {
+                    headers: {authorization: cookies.access_token},
+                });
+                setIsAdmin(response.data.isAdmin);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         if (userID) fetchUserName();
-    }, [userID]);
+        if (cookies.access_token) fetchAdminStatus();
+    }, [userID], cookies.access_token);
 
 
     useEffect(() => {
@@ -93,6 +109,32 @@ export const Home = () => {
 
     const isRecipeSaved = (id) => savedRecipes.includes(id);
 
+    const deleteRecipeByAdmin = async (recipeID) => {
+        try {
+            await axios.delete(`http://localhost:3001/api/recipes/${recipeID}`, {
+                headers: {authorization: cookies.access_token},
+            });
+            setRecipes(recipes.filter((recipe) => recipe._id !== recipeID));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const openModal = (recipeID) => {
+        setRecipeToDelete(recipeID);
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const deleteRecipe = () => {
+        deleteRecipeByAdmin(recipeToDelete);
+        closeModal();
+    };
+
+
     return (
         <div className='page-container'>
             <div className='welcome'>
@@ -129,6 +171,20 @@ export const Home = () => {
                                 <Link to={`/recipe/${recipe._id}`}>
                                     <button>Show details</button>
                                 </Link>
+                                {isAdmin && (
+                                    <button className='deleteByAdmin-button'
+                                            onClick={() => openModal(recipe._id)}>Delete</button>
+                                )}
+                                <Modal
+                                    className="delete-modal"
+                                    isOpen={modalIsOpen}
+                                    onRequestClose={closeModal}
+                                    contentLabel="Delete Modal">
+                                    <h2>Are you sure you want to delete this recipe?</h2>
+                                    <button onClick={deleteRecipe}>Yes</button>
+                                    <button onClick={closeModal}>No</button>
+                                </Modal>
+
                             </div>
                             <img src={recipe.imgUrl} alt={recipe.name}/>
                             <div className="recipe-info">
