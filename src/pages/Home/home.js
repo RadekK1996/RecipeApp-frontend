@@ -3,11 +3,15 @@ import axios from "axios";
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useCookies} from "react-cookie";
 import {AiOutlineSearch} from "react-icons/ai";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import moment from "moment";
 import {debounce} from "lodash";
-import './home.css';
 import Modal from "react-modal";
+import {RecipeEditForm} from "../EditRecipe/edit-recipe";
+
+import './home.css';
+
+
 
 export const Home = () => {
     const [recipes, setRecipes] = useState([]);
@@ -18,6 +22,9 @@ export const Home = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [recipeToDelete, setRecipeToDelete] = useState(null);
+    const [editing, setEditing] = useState(false);
+    const [editedRecipe, setEditedRecipe] = useState(null);
+    const navigate = useNavigate()
     const userID = useGetUserID();
 
     useEffect(() => {
@@ -134,6 +141,11 @@ export const Home = () => {
         closeModal();
     };
 
+    const onSaveEdit = () => {
+        setEditing(false);
+        setEditedRecipe(null);
+
+    };
 
     return (
         <div className='page-container'>
@@ -141,6 +153,7 @@ export const Home = () => {
                 <h2>Welcome, {userName}!</h2>
                 <p>Here you can browse and save recipes or create your own recipes to share with others!</p>
             </div>
+
             <div className="search-container">
                 <input
                     type="text"
@@ -172,8 +185,16 @@ export const Home = () => {
                                     <button>Show details</button>
                                 </Link>
                                 {isAdmin && (
-                                    <button className='deleteByAdmin-button'
-                                            onClick={() => openModal(recipe._id)}>Delete</button>
+                                    <>
+                                        <button className='deleteByAdmin-button'
+                                                onClick={() => openModal(recipe._id)}>Delete</button>
+                                        <button
+                                            className='edit-button'
+                                            onClick={() => navigate(`/edit-recipe/${recipe._id}`)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </>
                                 )}
                                 <Modal
                                     className="delete-modal"
@@ -196,6 +217,13 @@ export const Home = () => {
                     ))}
                 </ul>
             </div>
+
+            {editing && (
+                <RecipeEditForm
+                    recipe={editedRecipe}
+                    onSave={onSaveEdit}
+                />
+            )}
         </div>
     );
 };
