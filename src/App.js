@@ -8,11 +8,11 @@ import {Login} from "./pages/Login/login";
 import {Register} from "./pages/Register/register";
 import {Footer} from "./components/Footer/Footer";
 import {LandingPage} from "./pages/LandingPage/landing-page";
+import {RecipeEditForm} from "./pages/EditRecipe/edit-recipe";
 import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
 
 import './App.css';
-
 
 export const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,6 +33,7 @@ export const App = () => {
                     <Route path="/create-recipe" element={<CreateRecipe/>}/>
                     <Route path="/saved-recipes" element={<SavedRecipes/>}/>
                     <Route path="/recipe/:id" element={<SingleRecipe/>}/>
+                    <Route path="/edit-recipe/:id" element={<RecipeEditForm/>}/>
                 </Routes>
                 <Footer/>
             </Router>
