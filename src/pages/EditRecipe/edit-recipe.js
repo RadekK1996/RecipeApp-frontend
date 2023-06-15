@@ -7,6 +7,7 @@ export const RecipeEditForm = ({recipe, onSave}) => {
     const {id} = useParams();
     const [editedRecipe, setEditedRecipe] = useState(null);
     const [errors, setErrors] = useState([]);
+    const [successMessage, setSuccessMessage] = useState(null);
     const [cookies, _] = useCookies(["access_token"]);
 
 
@@ -47,11 +48,11 @@ export const RecipeEditForm = ({recipe, onSave}) => {
         e.preventDefault();
 
         try {
-           await axios.patch(`http://localhost:3001/api/recipes/${editedRecipe._id}`, editedRecipe, {
+            await axios.patch(`http://localhost:3001/api/recipes/${editedRecipe._id}`, editedRecipe, {
                 headers: {authorization: cookies.access_token},
             });
-
-           onSave()
+            setSuccessMessage('Changes saved successfully');
+            onSave();
 
         } catch (err) {
             if (err.response && err.response.data && err.response.data.errors) {
@@ -71,6 +72,10 @@ export const RecipeEditForm = ({recipe, onSave}) => {
             {editedRecipe ? (
                 <>
                     <h2>Edit recipe</h2>
+                    {successMessage && (
+                        <div className='success'>{successMessage}</div>
+                    )}
+
                     {errors?.map((error) => (
                         <div key={error} className="error">
                             {error}
