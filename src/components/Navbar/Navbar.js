@@ -4,6 +4,7 @@ import {useCookies} from "react-cookie";
 import {BiHome} from "react-icons/bi";
 import {IoMdCreate} from "react-icons/io";
 import {AiFillSave} from "react-icons/ai";
+import { FaUser } from 'react-icons/fa';
 import Modal from 'react-modal';
 
 import './Navbar.css';
@@ -43,6 +44,7 @@ export const Navbar = () => {
 
                     <Link to="/create-recipe">Create Recipe <IoMdCreate/></Link>
                     <Link to="/saved-recipes">Saved Recipes <AiFillSave/></Link>
+                    <Link to="/profile"><FaUser /></Link>
                     <button className="logout-button" onClick={openModal}>Logout</button>
                     <Modal
                         className = "logout-modal"

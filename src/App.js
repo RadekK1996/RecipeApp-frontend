@@ -13,6 +13,7 @@ import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
 
 import './App.css';
+import {UserProfile} from "./pages/UserProfile/user-profile";
 
 export const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,6 +35,7 @@ export const App = () => {
                     <Route path="/saved-recipes" element={<SavedRecipes/>}/>
                     <Route path="/recipe/:id" element={<SingleRecipe/>}/>
                     <Route path="/edit-recipe/:id" element={<RecipeEditForm/>}/>
+                    <Route path="/profile" element={<UserProfile/>}/>
                 </Routes>
                 <Footer/>
             </Router>
