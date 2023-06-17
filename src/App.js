@@ -9,11 +9,12 @@ import {Register} from "./pages/Register/register";
 import {Footer} from "./components/Footer/Footer";
 import {LandingPage} from "./pages/LandingPage/landing-page";
 import {RecipeEditForm} from "./pages/EditRecipe/edit-recipe";
+import {UserProfile} from "./pages/UserProfile/user-profile";
 import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
 
 import './App.css';
-import {UserProfile} from "./pages/UserProfile/user-profile";
+
 
 export const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
