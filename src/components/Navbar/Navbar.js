@@ -44,7 +44,7 @@ export const Navbar = () => {
 
                     <Link to="/create-recipe">Create Recipe <IoMdCreate/></Link>
                     <Link to="/saved-recipes">Saved Recipes <AiFillSave/></Link>
-                    <Link to="/profile"><FaUser /></Link>
+                    <Link to="/profile">Profile <FaUser /></Link>
                     <button className="logout-button" onClick={openModal}>Logout</button>
                     <Modal
                         className = "logout-modal"
