@@ -1,6 +1,6 @@
 import {useState} from "react";
 import axios from "axios";
-import {Form} from "./FormAuth.js";
+import {Form} from "./FormAuth.tsx";
 import {Link, useNavigate} from "react-router-dom";
 import './FormAuth.css';
 

@@ -2,7 +2,7 @@ import {useState} from "react";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import axios from "axios";
-import {Form} from "./FormAuth.js";
+import {Form} from "./FormAuth.tsx";
 import './FormAuth.css';
 
 export const LoginForm = () => {

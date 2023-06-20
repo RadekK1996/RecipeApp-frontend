@@ -1,4 +1,4 @@
-import {RegisterForm} from "../../components/FormAuth/RegisterForm.js";
+import {RegisterForm} from "../../components/FormAuth/RegisterForm.tsx";
 
 export const Register = () => {
     return (
