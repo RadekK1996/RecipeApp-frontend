@@ -1,13 +1,17 @@
-import {useState} from "react";
-import axios from "axios";
+import React, {ChangeEvent, useState} from "react";
+import axios, { AxiosRequestConfig } from 'axios';
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
+import {Recipe} from "../../types/recipe";
+import {Cookies} from "../../types/cookies";
+
 import './create-recipe.css';
+
 
 export const CreateRecipe = () => {
     const userID = useGetUserID();
-    const [recipe, setRecipe] = useState({
+    const [recipe, setRecipe] = useState<Recipe>({
         name: "",
         ingredients: [],
         instructions: "",
@@ -20,17 +24,17 @@ export const CreateRecipe = () => {
 
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const [errors, setErrors] = useState([]);
-    const [cookies, _] = useCookies(["access_token"]);
+    const [cookies, _]: [Cookies, any] = useCookies(["access_token"]);
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
         setRecipe({...recipe, [name]: value});
     };
 
-    const handleIngredientChange = (e, index) => {
+    const handleIngredientChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, index: number) => {
         const {value} = e.target;
-        const ingredients = recipe.ingredients;
+        const ingredients = [...recipe.ingredients];
         ingredients[index] = value;
         setRecipe({...recipe, ingredients});
 
@@ -56,7 +60,7 @@ export const CreateRecipe = () => {
         navigate('/create-recipe');
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const errors = [];
 
@@ -80,11 +84,12 @@ export const CreateRecipe = () => {
             errors.push('Ingredients are required');
         }
         if (errors.length === 0) {
-
             try {
-                await axios.post("http://localhost:3001/api/recipes", recipe, {
-                    headers: {authorization: cookies.access_token},
-                });
+                const config = {
+                    headers: { authorization: cookies.access_token }
+                } as AxiosRequestConfig;
+
+                await axios.post<Recipe>("http://localhost:3001/api/recipes", recipe, config);
                 setIsFormSubmitted(true);
                 setErrors([]);
             } catch (err) {
