@@ -1,4 +1,5 @@
 export interface Recipe {
+    _id?: string;
     name: string;
     ingredients: string[];
     instructions: string;
@@ -10,3 +11,12 @@ export interface Recipe {
 }
 
 
+export interface RecipeEditFormProps {
+    recipe: Recipe;
+    onSave: () => void;
+}
+
+export type RequiredFields = {
+    field: keyof Recipe;
+    message: string;
+}
