@@ -1,22 +1,23 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
+import {Cookies} from "../../types/cookies";
+import {Recipe, RecipeEditFormProps} from "../../types/recipe";
 
-export const RecipeEditForm = ({recipe, onSave}) => {
-    const {id} = useParams();
-    const [editedRecipe, setEditedRecipe] = useState(null);
-    const [errors, setErrors] = useState([]);
-    const [successMessage, setSuccessMessage] = useState(null);
-    const [cookies, _] = useCookies(["access_token"]);
-
+export const RecipeEditForm: React.FC<RecipeEditFormProps> = ({recipe, onSave}) => {
+    const {id} = useParams<{ id: string }>();
+    const [editedRecipe, setEditedRecipe] = useState<Recipe | null>(null);
+    const [errors, setErrors] = useState<string[]>([]);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [cookies, _]: [Cookies, any] = useCookies(["access_token"]);
 
     useEffect(() => {
         const getRecipe = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/recipes/${id}`);
+                const response: AxiosResponse<Recipe> = await axios.get(`http://localhost:3001/api/recipes/${id}`);
                 setEditedRecipe(response.data);
-            } catch (err) {
+            } catch (err: AxiosError) {
                 console.log(err);
             }
         };
@@ -28,35 +29,47 @@ export const RecipeEditForm = ({recipe, onSave}) => {
         setEditedRecipe(recipe);
     }, [recipe]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
-        setEditedRecipe({...editedRecipe, [name]: value});
+        if (editedRecipe) {
+            setEditedRecipe({...editedRecipe, [name]: value});
+        }
+
     };
 
-    const handleIngredientChange = (e, index) => {
+    const handleIngredientChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, index: number) => {
         const {value} = e.target;
-        const ingredients = editedRecipe.ingredients;
-        ingredients[index] = value;
-        setEditedRecipe({...editedRecipe, ingredients});
+        if (editedRecipe) {
+            const ingredients = editedRecipe.ingredients;
+            ingredients[index] = value;
+            setEditedRecipe({...editedRecipe, ingredients});
+        }
+
     };
 
     const addIngredient = () => {
-        setEditedRecipe({...editedRecipe, ingredients: [...editedRecipe.ingredients, ""]});
+        if (editedRecipe) {
+            setEditedRecipe({...editedRecipe, ingredients: [...editedRecipe.ingredients, ""]});
+        }
+
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            await axios.patch(`http://localhost:3001/api/recipes/${editedRecipe._id}`, editedRecipe, {
-                headers: {authorization: cookies.access_token},
-            });
+            if (editedRecipe) {
+                await axios.patch(`http://localhost:3001/api/recipes/${editedRecipe._id}`, editedRecipe, {
+                    headers: {authorization: cookies.access_token},
+                } as AxiosRequestConfig);
+            }
+
             setSuccessMessage('Changes saved successfully');
             onSave();
 
-        } catch (err) {
+        } catch (err: AxiosError) {
             if (err.response && err.response.data && err.response.data.errors) {
-                const responseErrors = [];
+                const responseErrors: string[] = [];
                 for (let errorName in err.response.data.errors) {
                     responseErrors.push(err.response.data.errors[errorName].message);
                 }
