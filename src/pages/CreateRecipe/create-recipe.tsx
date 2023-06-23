@@ -24,7 +24,7 @@ export const CreateRecipe = () => {
 
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const [errors, setErrors] = useState<string[]>([]);
-    const [cookies, _]: [Cookies, any] = useCookies(["access_token"]);
+    const [cookies]: [Cookies, any] = useCookies(["access_token"]);
     const navigate = useNavigate();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -166,7 +166,6 @@ export const CreateRecipe = () => {
                         <label htmlFor="category">Category</label>
                         <select
                             name="category"
-                            type="string"
                             id="category"
                             onChange={handleChange}>
                             <option value="">--Select a category--</option>
