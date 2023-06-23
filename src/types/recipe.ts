@@ -7,7 +7,7 @@ export interface Recipe {
     cookingTime: number;
     category: string;
     createdAt: Date;
-    userOwner: string;
+    userOwner: string | null;
 }
 
 
@@ -19,4 +19,9 @@ export interface RecipeEditFormProps {
 export type RequiredFields = {
     field: keyof Recipe;
     message: string;
+}
+
+export interface RouteParams {
+    id: string;
+    [key: string]: string | undefined;
 }
