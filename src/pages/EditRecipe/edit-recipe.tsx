@@ -10,7 +10,7 @@ export const RecipeEditForm: React.FC<RecipeEditFormProps> = ({recipe, onSave}) 
     const [editedRecipe, setEditedRecipe] = useState<Recipe | null>(null);
     const [errors, setErrors] = useState<string[]>([]);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    const [cookies, _]: [Cookies, any] = useCookies(["access_token"]);
+    const [cookies]: [Cookies, any] = useCookies(["access_token"]);
 
     useEffect(() => {
         const getRecipe = async () => {
