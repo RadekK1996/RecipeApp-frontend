@@ -19,7 +19,7 @@ import './home.css';
 export const Home = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [savedRecipes, setSavedRecipes] = useState<string[]>([]);
-    const [cookies, _]: [Cookies, any] = useCookies(["access_token"]);
+    const [cookies]: [Cookies, any] = useCookies(["access_token"]);
     const [userName, setUserName] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [isAdmin, setIsAdmin] = useState(false);
