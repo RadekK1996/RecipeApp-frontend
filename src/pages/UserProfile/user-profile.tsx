@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 import Modal from "react-modal";
 import {useGetUserID} from "../../hooks/useGetUserID";
+import {User} from "../../types/user";
 
 import './user-profile.css';
 
 
+
 export const UserProfile = () => {
-    const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState<string>("");
     const [cookies, setCookies] = useCookies(["access_token"]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
@@ -22,11 +24,11 @@ export const UserProfile = () => {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get(
+            const response: AxiosResponse<User> = await axios.get(
                 `http://localhost:3001/api/recipes/users/${userID}`
             );
             setUserName(response.data.username);
-        } catch (err) {
+        } catch (err: AxiosError) {
             console.error("Failed to fetch user data:", err);
         }
     };
@@ -41,7 +43,7 @@ export const UserProfile = () => {
             if (response.status === 200) {
                 logoutUser();
             }
-        } catch (err) {
+        } catch (err: AxiosError) {
             console.log(err);
         }
     };
