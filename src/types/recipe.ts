@@ -12,8 +12,8 @@ export interface Recipe {
 
 
 export interface RecipeEditFormProps {
-    recipe: Recipe;
-    onSave: () => void;
+    recipe?: Recipe;
+    onSave?: () => void;
 }
 
 export type RequiredFields = {

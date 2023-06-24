@@ -20,9 +20,15 @@ export const RegisterForm = () => {
             });
             setError('');
             navigate('/login?registered=success');
-        } catch (err: unknown) {
-            if(axios.isAxiosError(err))
-            setError(err.response.data.message);
+        }  catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                if (err.response) {
+                    setError(err.response.data.message);
+                }
+            } else {
+                console.log(err)
+            }
+
         }
     };
 

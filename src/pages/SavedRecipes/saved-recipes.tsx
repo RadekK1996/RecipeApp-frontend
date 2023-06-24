@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
-import axios, {AxiosError, AxiosRequestConfig} from "axios";
+import axios, {AxiosRequestConfig} from "axios";
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useCookies} from "react-cookie";
 import Modal from 'react-modal';
-import {Cookies} from "../../types/cookies";
 import {Recipe} from "../../types/recipe";
 
 
@@ -12,7 +11,7 @@ import './saved-recipes.css';
 
 export const SavedRecipes = () => {
     const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
-    const [cookies]: [Cookies, any] = useCookies(["access_token"]);
+    const [cookies] = useCookies(["access_token"]);
     const userID = useGetUserID();
     const [isRecipeDeleted, setIsRecipeDeleted] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -24,7 +23,7 @@ export const SavedRecipes = () => {
                 const response = await axios.get(`http://localhost:3001/api/recipes/savedRecipes/${userID}`);
                 setSavedRecipes(response.data.savedRecipes);
 
-            } catch (err: AxiosError) {
+            } catch (err) {
                 console.log(err);
             }
         };
@@ -41,7 +40,7 @@ export const SavedRecipes = () => {
 
             setSavedRecipes(savedRecipes.filter((recipe) => recipe._id !== recipeID));
 
-        } catch (err: AxiosError) {
+        } catch (err) {
             console.log(err);
         }
     };

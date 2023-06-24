@@ -1,8 +1,9 @@
-import React, { useState} from "react";
+import React, {useState} from "react";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import axios from "axios";
 import {Form} from "./FormAuth";
+
 import './FormAuth.css';
 
 export const LoginForm = () => {
@@ -28,8 +29,14 @@ export const LoginForm = () => {
             setError('');
 
         } catch (err: unknown) {
-            if(axios.isAxiosError(err))
-            setError(err.response.data.message);
+            if (axios.isAxiosError(err)) {
+                if (err.response) {
+                    setError(err.response.data.message);
+                }
+            } else {
+                console.log(err)
+            }
+
         }
     };
 

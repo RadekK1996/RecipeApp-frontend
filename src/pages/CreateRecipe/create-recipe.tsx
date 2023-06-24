@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useState} from "react";
-import axios, {AxiosError, AxiosRequestConfig} from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {Recipe, RequiredFields} from "../../types/recipe";
-import {Cookies} from "../../types/cookies";
+
 
 import './create-recipe.css';
 
@@ -24,7 +24,7 @@ export const CreateRecipe = () => {
 
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const [errors, setErrors] = useState<string[]>([]);
-    const [cookies]: [Cookies, any] = useCookies(["access_token"]);
+    const [cookies] = useCookies(["access_token"]);
     const navigate = useNavigate();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -92,12 +92,18 @@ export const CreateRecipe = () => {
                 await axios.post<Recipe>("http://localhost:3001/api/recipes", recipe, config);
                 setIsFormSubmitted(true);
                 setErrors([]);
-            } catch (err: AxiosError) {
-                const responseErrors = [];
-                for (let errorName in err.response.data.errors) {
-                    responseErrors.push(err.response.data.errors[errorName].message);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    if (err.response) {
+                        const responseErrors = [];
+                        for (let errorName in err.response.data.errors) {
+                            responseErrors.push(err.response.data.errors[errorName].message);
+                        }
+                        setErrors(responseErrors);
+                    }
+                } else {
+                    console.log(err);
                 }
-                setErrors(responseErrors);
             }
         } else {
             setErrors(errors);

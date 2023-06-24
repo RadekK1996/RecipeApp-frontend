@@ -1,8 +1,7 @@
-import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
+import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import React, {ChangeEvent, useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
-import {Cookies} from "../../types/cookies";
 import {Recipe, RecipeEditFormProps} from "../../types/recipe";
 
 export const RecipeEditForm: React.FC<RecipeEditFormProps> = ({recipe, onSave}) => {
@@ -10,15 +9,19 @@ export const RecipeEditForm: React.FC<RecipeEditFormProps> = ({recipe, onSave}) 
     const [editedRecipe, setEditedRecipe] = useState<Recipe | null>(null);
     const [errors, setErrors] = useState<string[]>([]);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    const [cookies]: [Cookies, any] = useCookies(["access_token"]);
+    const [cookies] = useCookies(["access_token"]);
 
     useEffect(() => {
         const getRecipe = async () => {
             try {
                 const response: AxiosResponse<Recipe> = await axios.get(`http://localhost:3001/api/recipes/${id}`);
                 setEditedRecipe(response.data);
-            } catch (err: AxiosError) {
-                console.log(err);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    console.log(err.message);
+                } else {
+                    console.log(err);
+                }
             }
         };
 
@@ -26,6 +29,7 @@ export const RecipeEditForm: React.FC<RecipeEditFormProps> = ({recipe, onSave}) 
     }, [id]);
 
     useEffect(() => {
+        if(recipe)
         setEditedRecipe(recipe);
     }, [recipe]);
 
@@ -65,17 +69,21 @@ export const RecipeEditForm: React.FC<RecipeEditFormProps> = ({recipe, onSave}) 
             }
 
             setSuccessMessage('Changes saved successfully');
-            onSave();
+            if (onSave) {
+                onSave();
+            }
 
-        } catch (err: AxiosError) {
-            if (err.response && err.response.data && err.response.data.errors) {
-                const responseErrors: string[] = [];
-                for (let errorName in err.response.data.errors) {
-                    responseErrors.push(err.response.data.errors[errorName].message);
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                if (err.response && err.response.data && err.response.data.errors) {
+                    const responseErrors: string[] = [];
+                    for (let errorName in err.response.data.errors) {
+                        responseErrors.push(err.response.data.errors[errorName].message);
+                    }
+                    setErrors(responseErrors);
                 }
-                setErrors(responseErrors);
             } else {
-                console.error('Error occurred while updating recipe', err);
+                console.log(err);
             }
         }
     };

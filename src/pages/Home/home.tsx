@@ -1,5 +1,5 @@
 import {ChangeEvent, useEffect, useState} from "react";
-import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
+import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useCookies} from "react-cookie";
 import {AiOutlineSearch} from "react-icons/ai";
@@ -9,17 +9,15 @@ import {debounce} from "lodash";
 import Modal from "react-modal";
 import {RecipeEditForm} from "../EditRecipe/edit-recipe";
 import {Recipe} from "../../types/recipe";
-import {Cookies} from "../../types/cookies";
 import {User} from "../../types/user";
 
 import './home.css';
 
 
-
 export const Home = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [savedRecipes, setSavedRecipes] = useState<string[]>([]);
-    const [cookies]: [Cookies, any] = useCookies(["access_token"]);
+    const [cookies] = useCookies(["access_token"]);
     const [userName, setUserName] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [isAdmin, setIsAdmin] = useState(false);
@@ -35,8 +33,12 @@ export const Home = () => {
             try {
                 const response: AxiosResponse<User> = await axios.get(`http://localhost:3001/api/recipes/users/${userID}`);
                 setUserName(response.data.username);
-            } catch (err: AxiosError) {
-                console.log(err);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    console.log(err.message);
+                } else {
+                    console.log(err);
+                }
             }
         };
 
@@ -46,8 +48,12 @@ export const Home = () => {
                     headers: {authorization: cookies.access_token},
                 } as AxiosRequestConfig);
                 setIsAdmin(response.data.isAdmin);
-            } catch (err) {
-                console.log(err);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    console.log(err.message);
+                } else {
+                    console.log(err);
+                }
             }
         };
 
@@ -56,15 +62,18 @@ export const Home = () => {
     }, [userID, cookies.access_token]);
 
 
-
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
                 const response: AxiosResponse<Recipe[]> = await axios.get('http://localhost:3001/api/recipes');
                 setRecipes(response.data);
 
-            } catch (err: AxiosError) {
-                console.log(err);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    console.log(err.message);
+                } else {
+                    console.log(err);
+                }
             }
         };
 
@@ -73,8 +82,12 @@ export const Home = () => {
                 const response: AxiosResponse<User> = await axios.get(`http://localhost:3001/api/recipes/savedRecipes/ids/${userID}`);
                 setSavedRecipes(response.data.savedRecipes);
 
-            } catch (err: AxiosError) {
-                console.log(err);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    console.log(err.message);
+                } else {
+                    console.log(err);
+                }
             }
         };
 
@@ -89,8 +102,12 @@ export const Home = () => {
             try {
                 const response: AxiosResponse<Recipe[]> = await axios.get(`http://localhost:3001/api/recipes/search?name=${searchTerm}`);
                 setRecipes(response.data);
-            } catch (err) {
-                console.log(err);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    console.log(err.message);
+                } else {
+                    console.log(err);
+                }
             }
         } else {
 
@@ -112,13 +129,16 @@ export const Home = () => {
             }, {headers: {authorization: cookies.access_token},} as AxiosRequestConfig);
             setSavedRecipes(response.data.savedRecipes);
 
-        } catch (err) {
-            console.log(err);
+        }  catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                console.log(err.message);
+            } else {
+                console.log(err);
+            }
         }
-
     };
 
-    const isRecipeSaved = (id: string | undefined) => id ? savedRecipes.includes(id): false;
+    const isRecipeSaved = (id: string | undefined) => id ? savedRecipes.includes(id) : false;
 
     const deleteRecipeByAdmin = async (recipeID: string) => {
         try {
@@ -126,13 +146,17 @@ export const Home = () => {
                 headers: {authorization: cookies.access_token},
             } as AxiosRequestConfig);
             setRecipes(recipes.filter((recipe) => recipe._id !== recipeID));
-        } catch (err) {
-            console.log(err);
+        }  catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                console.log(err.message);
+            } else {
+                console.log(err);
+            }
         }
     };
 
     const openModal = (recipeID: string | undefined) => {
-        if(recipeID) {
+        if (recipeID) {
             setRecipeToDelete(recipeID);
             setModalIsOpen(true);
         }
@@ -144,7 +168,7 @@ export const Home = () => {
     };
 
     const deleteRecipe = () => {
-        if(recipeToDelete) {
+        if (recipeToDelete) {
             deleteRecipeByAdmin(recipeToDelete);
             closeModal();
         }

@@ -1,5 +1,6 @@
 import {Dispatch, FC, FormEvent, SetStateAction, useState} from "react";
 import {BiHide, BiShow} from 'react-icons/bi';
+
 import './FormAuth.css';
 
 interface Props {

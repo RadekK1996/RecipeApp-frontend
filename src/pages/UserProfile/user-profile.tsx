@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import axios, {AxiosError, AxiosResponse} from "axios";
+import axios, {AxiosResponse} from "axios";
 import Modal from "react-modal";
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {User} from "../../types/user";
@@ -28,7 +28,7 @@ export const UserProfile = () => {
                 `http://localhost:3001/api/recipes/users/${userID}`
             );
             setUserName(response.data.username);
-        } catch (err: AxiosError) {
+        } catch (err) {
             console.error("Failed to fetch user data:", err);
         }
     };
@@ -43,7 +43,7 @@ export const UserProfile = () => {
             if (response.status === 200) {
                 logoutUser();
             }
-        } catch (err: AxiosError) {
+        } catch (err) {
             console.log(err);
         }
     };
