@@ -1,8 +1,9 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import axios from "axios";
-import {Form} from "./FormAuth.js";
+import {Form} from "./FormAuth";
+
 import './FormAuth.css';
 
 export const LoginForm = () => {
@@ -14,7 +15,7 @@ export const LoginForm = () => {
     const [searchParams] = useSearchParams();
     let isAfterRegistration = searchParams.get('registered');
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:3001/api/auth/login", {
@@ -27,8 +28,15 @@ export const LoginForm = () => {
             navigate('/');
             setError('');
 
-        } catch (err) {
-            setError(err.response.data.message);
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                if (err.response) {
+                    setError(err.response.data.message);
+                }
+            } else {
+                console.log(err)
+            }
+
         }
     };
 

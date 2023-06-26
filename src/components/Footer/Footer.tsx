@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {AiFillFacebook, AiFillInstagram, AiFillTwitterCircle, AiFillYoutube} from "react-icons/ai";
+
 import './Footer.css';
 
 export const Footer = () => {

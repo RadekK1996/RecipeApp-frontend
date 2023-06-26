@@ -1,13 +1,17 @@
-import {useState} from "react";
-import axios from "axios";
+import React, {ChangeEvent, useState} from "react";
+import axios, {AxiosRequestConfig} from 'axios';
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
+import {Recipe, RequiredFields} from "../../types/recipe";
+
+
 import './create-recipe.css';
+
 
 export const CreateRecipe = () => {
     const userID = useGetUserID();
-    const [recipe, setRecipe] = useState({
+    const [recipe, setRecipe] = useState<Recipe>({
         name: "",
         ingredients: [],
         instructions: "",
@@ -19,18 +23,18 @@ export const CreateRecipe = () => {
     });
 
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-    const [errors, setErrors] = useState([]);
-    const [cookies, _] = useCookies(["access_token"]);
+    const [errors, setErrors] = useState<string[]>([]);
+    const [cookies] = useCookies(["access_token"]);
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value} = e.target;
         setRecipe({...recipe, [name]: value});
     };
 
-    const handleIngredientChange = (e, index) => {
+    const handleIngredientChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, index: number) => {
         const {value} = e.target;
-        const ingredients = recipe.ingredients;
+        const ingredients = [...recipe.ingredients];
         ingredients[index] = value;
         setRecipe({...recipe, ingredients});
 
@@ -56,11 +60,11 @@ export const CreateRecipe = () => {
         navigate('/create-recipe');
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const errors = [];
 
-        const requiredFields = [
+        const requiredFields: RequiredFields[] = [
             {field: 'name', message: 'Name is required'},
             {field: 'instructions', message: 'Instructions are required'},
             {field: 'imgUrl', message: 'Image URL is required'},
@@ -80,19 +84,26 @@ export const CreateRecipe = () => {
             errors.push('Ingredients are required');
         }
         if (errors.length === 0) {
-
             try {
-                await axios.post("http://localhost:3001/api/recipes", recipe, {
-                    headers: {authorization: cookies.access_token},
-                });
+                const config = {
+                    headers: { authorization: cookies.access_token }
+                } as AxiosRequestConfig;
+
+                await axios.post<Recipe>("http://localhost:3001/api/recipes", recipe, config);
                 setIsFormSubmitted(true);
                 setErrors([]);
-            } catch (err) {
-                const responseErrors = [];
-                for (let errorName in err.response.data.errors) {
-                    responseErrors.push(err.response.data.errors[errorName].message);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    if (err.response) {
+                        const responseErrors = [];
+                        for (let errorName in err.response.data.errors) {
+                            responseErrors.push(err.response.data.errors[errorName].message);
+                        }
+                        setErrors(responseErrors);
+                    }
+                } else {
+                    console.log(err);
                 }
-                setErrors(responseErrors);
             }
         } else {
             setErrors(errors);
@@ -161,7 +172,6 @@ export const CreateRecipe = () => {
                         <label htmlFor="category">Category</label>
                         <select
                             name="category"
-                            type="string"
                             id="category"
                             onChange={handleChange}>
                             <option value="">--Select a category--</option>

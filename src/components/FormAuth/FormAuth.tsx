@@ -1,8 +1,18 @@
-import {useState} from "react";
+import {Dispatch, FC, FormEvent, SetStateAction, useState} from "react";
 import {BiHide, BiShow} from 'react-icons/bi';
+
 import './FormAuth.css';
 
-export const Form = ({username, setUsername, password, setPassword, label, onSubmit}) => {
+interface Props {
+    username: string;
+    setUsername: Dispatch<SetStateAction<string>>;
+    password: string;
+    setPassword: Dispatch<SetStateAction<string>>;
+    label: string;
+    onSubmit: (e: FormEvent) => void;
+}
+
+export const Form: FC<Props> = ({username, setUsername, password, setPassword, label, onSubmit}) => {
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => {
         setShowPassword(!showPassword);

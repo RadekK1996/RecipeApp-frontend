@@ -1,17 +1,21 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
+import axios, {AxiosRequestConfig} from "axios";
 import {useGetUserID} from "../../hooks/useGetUserID";
 import {useCookies} from "react-cookie";
 import Modal from 'react-modal';
+import {Recipe} from "../../types/recipe";
+
+
 import './saved-recipes.css';
 
+
 export const SavedRecipes = () => {
-    const [savedRecipes, setSavedRecipes] = useState([]);
-    const [cookies, _] = useCookies(["access_token"]);
+    const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
+    const [cookies] = useCookies(["access_token"]);
     const userID = useGetUserID();
     const [isRecipeDeleted, setIsRecipeDeleted] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [recipeToDelete, setRecipeToDelete] = useState(null);
+    const [recipeToDelete, setRecipeToDelete] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchSavedRecipe = async () => {
@@ -24,14 +28,14 @@ export const SavedRecipes = () => {
             }
         };
 
-        fetchSavedRecipe();
+         fetchSavedRecipe();
 
     }, [userID, isRecipeDeleted]);
 
-    const handleDeleteRecipe = async (recipeID) => {
+    const handleDeleteRecipe = async (recipeID: string) => {
         try {
             await axios.delete(`http://localhost:3001/api/recipes/${userID}/savedRecipes/${recipeID}`,
-                {headers: {authorization: cookies.access_token}})
+                {headers: {authorization: cookies.access_token}} as AxiosRequestConfig)
             setIsRecipeDeleted(true);
 
             setSavedRecipes(savedRecipes.filter((recipe) => recipe._id !== recipeID));
@@ -45,7 +49,8 @@ export const SavedRecipes = () => {
         setIsRecipeDeleted(false);
     };
 
-    const openModal = (recipeID) => {
+    const openModal = (recipeID: string | undefined) => {
+        if(recipeID)
         setRecipeToDelete(recipeID);
         setModalIsOpen(true);
     };
@@ -55,6 +60,7 @@ export const SavedRecipes = () => {
     };
 
     const deleteRecipe = () => {
+        if(recipeToDelete)
         handleDeleteRecipe(recipeToDelete);
         closeModal();
     };
@@ -71,8 +77,8 @@ export const SavedRecipes = () => {
                     <div>
                         <h1 className='saved-recipes-title'>Saved Recipes</h1>
                         <ul>
-                            {savedRecipes.map((recipe) => (
-                                <li key={recipe._id}>
+                            {savedRecipes.map((recipe, index) => (
+                                <li key={recipe._id || index}>
                                     <div>
                                         <h2 className="recipe-name">{recipe.name}</h2>
                                         <img className='recipe-image' src={recipe.imgUrl} alt={recipe.name}/>

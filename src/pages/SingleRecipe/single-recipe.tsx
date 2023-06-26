@@ -1,25 +1,30 @@
 import {useState, useEffect} from "react";
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import'./single-recipe.css';
+import {Recipe, RouteParams} from "../../types/recipe";
 
 export const SingleRecipe = () => {
 
-    const [recipe, setRecipe] = useState({
+    const [recipe, setRecipe] = useState<Recipe>({
         name: "",
         ingredients: [],
         instructions: "",
         imgUrl: "",
         cookingTime: 0,
-    });
-    const {id} = useParams();
+        category: "",
+        createdAt: new Date(),
+        userOwner: "",
+    } as Recipe);
+
+    const {id} = useParams<RouteParams>();
     const navigate = useNavigate();
 
 
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/recipes/${id}`);
+                const response: AxiosResponse<Recipe> = await axios.get(`http://localhost:3001/api/recipes/${id}`);
                 setRecipe(response.data);
             } catch (err) {
                 console.log(err);

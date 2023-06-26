@@ -1,6 +1,6 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import {Form} from "./FormAuth.js";
+import {Form} from "./FormAuth";
 import {Link, useNavigate} from "react-router-dom";
 import './FormAuth.css';
 
@@ -11,7 +11,7 @@ export const RegisterForm = () => {
     const [error, setError] = useState("");
 
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             await axios.post("http://localhost:3001/api/auth/register", {
@@ -20,8 +20,15 @@ export const RegisterForm = () => {
             });
             setError('');
             navigate('/login?registered=success');
-        } catch (err) {
-            setError(err.response.data.message);
+        }  catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                if (err.response) {
+                    setError(err.response.data.message);
+                }
+            } else {
+                console.log(err)
+            }
+
         }
     };
 

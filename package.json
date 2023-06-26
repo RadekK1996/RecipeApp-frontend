@@ -41,7 +41,14 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "@types/lodash": "^4.14.195",
+    "@types/node": "^20.3.1",
+    "@types/react": "^18.2.13",
+    "@types/react-dom": "^18.2.6",
+    "@types/react-modal": "^3.16.0",
     "moment": "^2.29.4",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "typescript": "^5.1.3"
   }
 }
